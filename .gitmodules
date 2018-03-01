@@ -1,0 +1,13 @@
+[submodule "linux"]
+	path = linux
+	url = https://github.com/Digilent/Petalinux-Zybo-Z7-20.git
+	branch = revision
+[submodule "sdsoc/zybo_z7_20/resources/samples"]
+	path = sdsoc/zybo_z7_20/resources/samples
+	url = https://github.com/Digilent/sdsoc-samples.git
+[submodule "sdsoc/zybo_z7_20/resources/revision-samples"]
+	path = sdsoc/zybo_z7_20/resources/revision-samples
+	url = https://github.com/Digilent/revision-samples.git
+[submodule "sdsoc/zybo_z7_20/resources/xfopencv"]
+	path = sdsoc/zybo_z7_20/resources/xfopencv
+	url = https://github.com/Xilinx/xfopencv.git
