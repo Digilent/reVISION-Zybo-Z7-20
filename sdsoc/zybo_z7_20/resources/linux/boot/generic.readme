@@ -1,0 +1,9 @@
+-= SD card boot image =-
+
+Platform: <platform>
+Application: <elf>
+
+1. Follow the README.txt that came with this platform to prepare the SD card.
+2. Copy the contents of this directory to the first partition of your SD card
+3. Set boot mode to SD
+4. Insert SD card and turn board on

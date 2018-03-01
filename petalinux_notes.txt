@@ -1,0 +1,45 @@
+========================================
+Changes made for SDSoC/reVISION support
+========================================
+
+The steps found in the Linux Boot Files section of UG1146 were followed to make the 
+Linux system suitable for an SDSoC platform. In addition to these changes, the following changes were
+also made:
+
+1) Imported HDF found in hw_handoff using petalinux-config
+
+2) Instead of modifying the bootargs in the petalinux-config menu, the system-user.dtsi file was modified to include "quiet".
+
+3) Based on references in the ZCU102 revision platform, Instead of the xlnk device tree node cited in ug1146, the following was
+   used (which puts the node in amba):
+
+&amba {
+	xlnk {
+		compatible = "xlnx,xlnk-1.0";
+	};
+};
+
+4) Changed the CMA size to 256 MB using petalinux-config -c kernel 
+
+5) Used petalinux-config -c rootfs to enable the following packages:
+
+	misc->packagegroup-core-buildessential
+	misc->packagegroup-petalinux-opencv
+	misc->gdb->gdbserver
+	console->utils->file->file
+	console->utils->strace->strace
+	misc->valgrind
+
+6) Including opencv and the other rootfs libraries causes the ramdisk size to increase to >128MB. Booting with a ramdisk this large 
+   is not currently working, so we had to switch to SD rootfs. This has other benefits, including additional available system memory,
+   persistent modifications, and increased system performance in some scenarios. The main cost of this is added complexity to the SD
+   card preparation, because the image has to be flashed onto the SD card. 
+
+   The idea that this issue is caused by the rootfs being larger than 128MB compressed is speculation, another possibility is that 
+   this is being caused by the existence of some hard links present in the opencv packages that are incompatible with the cpio 
+   compression used with the initramdisk. 
+
+   That was the explanation, the how is as follows: used petalinux-config to change Root Filesystem type to "SD Card" as described in
+   the petalinux README.md, being careful not to remove "quiet" from the bootargs in the device tree.
+
+   root=/dev/mmcblk0p2 rw rootwait

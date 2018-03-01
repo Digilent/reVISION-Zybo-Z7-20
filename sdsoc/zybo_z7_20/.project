@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>zybo_z7_20</name>
+	<comment>Created by SDx v2017.4</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>com.xilinx.sdk.scw.project.ScwProjectNature</nature>
+	</natures>
+</projectDescription>
