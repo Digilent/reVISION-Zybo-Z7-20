@@ -10,7 +10,7 @@ cp -f -v ${REPO_DIR}/vivado/${PLATFORM_NAME}/${PLATFORM_NAME}.dsa ../_platform/d
 cp -f -v ${REPO_DIR}/hw_handoff/${PLATFORM_NAME}_wrapper.hdf ./prebuilt/${PLATFORM_NAME}.hdf
 cp -f -v ./prebuilt/${PLATFORM_NAME}.hdf ./prebuilt/${PLATFORM_NAME}.zip
 mkdir ./tmp
-unzip -o ./prebuilt/${PLATFORM_NAME}.zip -d ./tmp/
+unzip -o ./prebuilt/${PLATFORM_NAME}.zip -d ./tmp/ > /dev/null 
 cp -f -v ./tmp/${PLATFORM_NAME}_wrapper.bit ./prebuilt/bitstream.bit
 rm -f ./prebuilt/${PLATFORM_NAME}.zip
 rm -rf ./tmp/ 
