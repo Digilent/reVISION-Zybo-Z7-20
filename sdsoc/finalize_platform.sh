@@ -6,7 +6,7 @@ SDX_VERSION=2017.4
 
 PLATFORM_DIR=./${PLATFORM_NAME}/export/${PLATFORM_NAME}
 REPO_DIR=..
-RELEASE_NAME=reVISION-${PLATFORM_NAME}-${SDX_VERSION}-
+RELEASE_NAME=reVISION-${PETALINUX_PROJECT}-${SDX_VERSION}-
 
 ## Script is run as root, so "sudo -u $real_user" must be in front of all 
 ## non-sudo commands.
