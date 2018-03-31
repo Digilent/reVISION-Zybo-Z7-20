@@ -128,8 +128,9 @@ PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_* has negative value...
     9. Close Vivado and the terminal. You don't have to save the block diagram 
        if asked, the create_dsa.tcl script needlessly makes it dirty.
 
-2. If changes have been made to the petalinux project or it has not been built 
-   yet since cloning this repo, the following must be done:
+2. If changes have been made to the petalinux project or the vivado project, or 
+   the petalinux project has not been built yet since cloning this repo, the 
+   following must be done:
 
     1. Open a new terminal and run "source /opt/pkg/petalinux/settings.sh".
 
@@ -156,19 +157,21 @@ PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_* has negative value...
 
 7. Choose the sdsoc folder of this repo as your workspace.
 
-8. Click Import Project on the Welcome screen. In the window that opens, select
-   the sdsoc folder as the root directory and click finish to import the 
-   zybo_z7_20 platform project.
+8. If this is the first time opening the workspace, click Import Project on the 
+   Welcome screen. In the window that opens, select the sdsoc folder as the root
+   directory and click finish to import the zybo_z7_20 platform project. Skip 
+   this step if the workspace already has the project imported.
 
 9. In the Project Explorer pane, double click platform.spr in the zybo_z7_20
    project. Changes, such as adding library and include paths, can be made to
    the platform at this point. See UG1146 from Xilinx for information on using
    this tool to define the SDSoC platform.
 
-10. Click the hammer in the zybo_z7_20 pane to generate the platform.
+10. Click the hammer in the zybo_z7_20 pane to generate the platform. After it 
+    finishes the console should indicate that the platform was generated 
+    successfully. Close SDx.
 
-11. Open a new terminal (outside SDx) and cd into the sdsoc folder. Run the 
-    following:
+11. Open a new terminal and cd into the sdsoc folder. Run the following:
 
         sudo ./finalize_platform.sh
 
