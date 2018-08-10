@@ -44,6 +44,8 @@
 /vivado/*/*.runs/
 /vivado/*/*.cache/
 /vivado/*/*.sdk/
+/vivado/*/*.ip_user_files/
+!/vivado/*/*.ip_user_files/README.txt
 /vivado/*/.Xil/
 /vivado/*/*.log
 /vivado/*/*.str
