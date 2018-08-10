@@ -14,6 +14,26 @@ Pre-requisites
 * SDx 2017.4 Installed on either a Windows or supported Linux host. 
 * 2GB or larger microSD card 
 
+
+============================
+Known Issues and Limitations
+============================
+
+* The Live I/O demos currently demonstrate image tearing because the video data
+  is drawn directly onto the active display buffer. This can be fixed in the 
+  Pcam 5C demo by drawing to an inactive frame buffer and then calling the 
+  mapFBtoCRTC function to page flip it onto the display (this is not tested).
+  Unfortunately, the HDMI input demo may be harder to fix, because the input 
+  pipeline does not provide a method to determine when a frame has completed.
+  It seems the correct way to fix this would be to switch to the framebuffer 
+  write IP core and overhaul the software. 
+
+* Running simultaneous HDMI input and Pcam 5C may cause bandwidth issues at the
+  DDR interconnect. This is not currently supported.
+
+
+* Onboard audio codec is not currently supported in Linux.
+
 ============================
 Creating the microSD card
 ============================
@@ -118,6 +138,12 @@ To install this platform and run the sample programs, do the following:
 14. After the build completes, look for the Debug->sd_card folder under your 
     project in the Project Explorer pane. Copy the entire contents of that 
     folder to the 500MB partition of microSD.
+
+*NOTE* The pcam filter2d demo generates a scripts folder that includes several
+       scripts that configure the pcam input pipeline to a specific resolution.
+       One of these scripts must be run prior to running the generated .elf 
+       file.
+
 15. Eject the microSD card from the host and insert it into the Digilent board.
 16. Attach the USB UART port of the board to the computer.
 17. Attach a suitable external power supply to power the board's barrel jack, 

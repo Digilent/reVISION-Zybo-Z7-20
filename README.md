@@ -54,10 +54,7 @@ repo.
    insanely long build times and failure to meet timing. The current work around
    is to manually insert a BUFG on FCLK1 using a util_ds_buf IP core.
 
-2. Audio is not functional
-
-
-3. The included vivado project has several critical warnings that complain about
+2. The included vivado project has several critical warnings that complain about
    negative values in the DDR parameters. These can be safely ignored. The 
    warnings look similar to:
 
@@ -65,16 +62,18 @@ repo.
 PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_* has negative value...
 ```
 
-4. Board files and IP repo are forked and locally included with the Vivado 
+3. Board files and IP repo are forked and locally included with the Vivado 
    project. It should be possible to reduce redundancy by including them both as
    submodules.
 
-5. Currently we have not been able to get the Zybo Z7-20 to boot with a rootfs 
+4. Currently we have not been able to get the Zybo Z7-20 to boot with a rootfs 
    this large in initramfs mode. Our work around is to use an SD rootfs loaded 
    on the second partition of the SD card. This allows for larger file system 
    space, persistent changes, and more available system memory, but requires 
    additional steps to prepare the SD card. Since the rootfs is not altered by 
    SDx, a user of this platform should only have to flash the SD card once. 
+
+See sdsoc/README.txt for additional known issues related to use of the platform.
 
 # Building the Platform
 

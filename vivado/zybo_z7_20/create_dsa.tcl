@@ -20,7 +20,7 @@ set_property PFM.AXI_PORT { \
 	S_AXI_ACP {memport "S_AXI_ACP" sptag "ACP" memory "ps_ACP_DDR_LOWOCM"} \
 	} [get_bd_cells /processing_system7_0]
 set intVar []
-for {set i 6} {$i < 16} {incr i} {
+for {set i 9} {$i < 16} {incr i} {
 	lappend intVar In$i {}
 }
 set_property PFM.IRQ $intVar [get_bd_cells /xlconcat_0]

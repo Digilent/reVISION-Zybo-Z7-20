@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
---Date        : Tue Feb 27 20:11:52 2018
+--Date        : Sun Aug  5 21:58:19 2018
 --Host        : ubuntu running 64-bit Ubuntu 16.04.3 LTS
 --Command     : generate_target zybo_z7_20_wrapper.bd
 --Design      : zybo_z7_20_wrapper
@@ -54,6 +54,17 @@ entity zybo_z7_20_wrapper is
     ac_recdat : in STD_LOGIC_VECTOR ( 0 to 0 );
     ac_reclrc : out STD_LOGIC_VECTOR ( 0 to 0 );
     btns_4bits_tri_i : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    cam_gpio : out STD_LOGIC_VECTOR ( 0 to 0 );
+    cam_iic_scl_io : inout STD_LOGIC;
+    cam_iic_sda_io : inout STD_LOGIC;
+    dphy_clk_hs_n : in STD_LOGIC;
+    dphy_clk_hs_p : in STD_LOGIC;
+    dphy_clk_lp_n : in STD_LOGIC;
+    dphy_clk_lp_p : in STD_LOGIC;
+    dphy_data_hs_n : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    dphy_data_hs_p : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    dphy_data_lp_n : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    dphy_data_lp_p : in STD_LOGIC_VECTOR ( 1 downto 0 );
     eth_rst_b_tri_io : inout STD_LOGIC_VECTOR ( 0 to 0 );
     hdmi_in_clk_n : in STD_LOGIC;
     hdmi_in_clk_p : in STD_LOGIC;
@@ -143,16 +154,31 @@ architecture STRUCTURE of zybo_z7_20_wrapper is
     hdmi_out_clk_n : out STD_LOGIC;
     hdmi_out_data_p : out STD_LOGIC_VECTOR ( 2 downto 0 );
     hdmi_out_data_n : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    dphy_clk_hs_n : in STD_LOGIC;
+    dphy_clk_hs_p : in STD_LOGIC;
+    dphy_clk_lp_n : in STD_LOGIC;
+    dphy_clk_lp_p : in STD_LOGIC;
+    dphy_data_hs_n : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    dphy_data_hs_p : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    dphy_data_lp_n : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    dphy_data_lp_p : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    cam_iic_scl_i : in STD_LOGIC;
+    cam_iic_scl_o : out STD_LOGIC;
+    cam_iic_scl_t : out STD_LOGIC;
+    cam_iic_sda_i : in STD_LOGIC;
+    cam_iic_sda_o : out STD_LOGIC;
+    cam_iic_sda_t : out STD_LOGIC;
     pwm_rgb : out STD_LOGIC_VECTOR ( 5 downto 0 );
     ac_recdat : in STD_LOGIC_VECTOR ( 0 to 0 );
     hdmi_in_hpd : out STD_LOGIC_VECTOR ( 0 to 0 );
     ac_bclk : out STD_LOGIC_VECTOR ( 0 to 0 );
-    ac_pblrc : out STD_LOGIC_VECTOR ( 0 to 0 );
     ac_reclrc : out STD_LOGIC_VECTOR ( 0 to 0 );
+    ac_pblrc : out STD_LOGIC_VECTOR ( 0 to 0 );
     ac_pbdat : out STD_LOGIC_VECTOR ( 0 to 0 );
     ac_mclk : out STD_LOGIC;
     sys_clock : in STD_LOGIC;
-    ac_muten : out STD_LOGIC_VECTOR ( 0 to 0 )
+    ac_muten : out STD_LOGIC_VECTOR ( 0 to 0 );
+    cam_gpio : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component zybo_z7_20;
   component IOBUF is
@@ -169,6 +195,12 @@ architecture STRUCTURE of zybo_z7_20_wrapper is
   signal ac_iic_sda_i : STD_LOGIC;
   signal ac_iic_sda_o : STD_LOGIC;
   signal ac_iic_sda_t : STD_LOGIC;
+  signal cam_iic_scl_i : STD_LOGIC;
+  signal cam_iic_scl_o : STD_LOGIC;
+  signal cam_iic_scl_t : STD_LOGIC;
+  signal cam_iic_sda_i : STD_LOGIC;
+  signal cam_iic_sda_o : STD_LOGIC;
+  signal cam_iic_sda_t : STD_LOGIC;
   signal eth_rst_b_tri_i_0 : STD_LOGIC_VECTOR ( 0 to 0 );
   signal eth_rst_b_tri_io_0 : STD_LOGIC_VECTOR ( 0 to 0 );
   signal eth_rst_b_tri_o_0 : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -215,6 +247,20 @@ ac_iic_sda_iobuf: component IOBUF
       IO => ac_iic_sda_io,
       O => ac_iic_sda_i,
       T => ac_iic_sda_t
+    );
+cam_iic_scl_iobuf: component IOBUF
+     port map (
+      I => cam_iic_scl_o,
+      IO => cam_iic_scl_io,
+      O => cam_iic_scl_i,
+      T => cam_iic_scl_t
+    );
+cam_iic_sda_iobuf: component IOBUF
+     port map (
+      I => cam_iic_sda_o,
+      IO => cam_iic_sda_io,
+      O => cam_iic_sda_i,
+      T => cam_iic_sda_t
     );
 eth_rst_b_tri_iobuf_0: component IOBUF
      port map (
@@ -326,6 +372,21 @@ zybo_z7_20_i: component zybo_z7_20
       ac_recdat(0) => ac_recdat(0),
       ac_reclrc(0) => ac_reclrc(0),
       btns_4bits_tri_i(3 downto 0) => btns_4bits_tri_i(3 downto 0),
+      cam_gpio(0) => cam_gpio(0),
+      cam_iic_scl_i => cam_iic_scl_i,
+      cam_iic_scl_o => cam_iic_scl_o,
+      cam_iic_scl_t => cam_iic_scl_t,
+      cam_iic_sda_i => cam_iic_sda_i,
+      cam_iic_sda_o => cam_iic_sda_o,
+      cam_iic_sda_t => cam_iic_sda_t,
+      dphy_clk_hs_n => dphy_clk_hs_n,
+      dphy_clk_hs_p => dphy_clk_hs_p,
+      dphy_clk_lp_n => dphy_clk_lp_n,
+      dphy_clk_lp_p => dphy_clk_lp_p,
+      dphy_data_hs_n(1 downto 0) => dphy_data_hs_n(1 downto 0),
+      dphy_data_hs_p(1 downto 0) => dphy_data_hs_p(1 downto 0),
+      dphy_data_lp_n(1 downto 0) => dphy_data_lp_n(1 downto 0),
+      dphy_data_lp_p(1 downto 0) => dphy_data_lp_p(1 downto 0),
       eth_rst_b_tri_i(0) => eth_rst_b_tri_i_0(0),
       eth_rst_b_tri_o(0) => eth_rst_b_tri_o_0(0),
       eth_rst_b_tri_t(0) => eth_rst_b_tri_t_0(0),
